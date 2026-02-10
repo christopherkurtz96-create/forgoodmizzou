@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Good Mizzou — Salt Company at Anthem Church</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Permanent+Marker&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #D4952A;
+    --gold-light: #E8B44F;
+    --black: #0A0A0A;
+    --off-black: #141414;
+    --dark-gray: #1C1C1C;
+    --warm-gray: #2A2622;
+    --cream: #F5F0E8;
+    --cream-dark: #E8DFD0;
+    --text-light: #F5F0E8;
+    --text-muted: #A09888;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--black);
+    color: var(--text-light);
+    overflow-x: hidden;
+  }
+
+  /* ═══════════════════════════════════════
+     HERO SECTION
+  ═══════════════════════════════════════ */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    padding: 2rem;
+    background: var(--black);
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('ForGoodMedia/HeroSection.jpg') center / cover fixed;
+    filter: grayscale(100%);
+    z-index: 0;
+  }
+
+  .hero .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,1) 100%);
+    z-index: 1;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 3;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 4;
+    max-width: 800px;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 0.4rem 1.2rem;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.3s;
+  }
+
+  .hero-title {
+    font-family: 'Permanent Marker', cursive;
+    font-size: clamp(3.5rem, 10vw, 8rem);
+    line-height: 0.9;
+    color: var(--cream);
+    margin-bottom: 0.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.5s;
+  }
+
+  .hero-title span { color: var(--gold); }
+
+  .hero-subtitle {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.7s;
+  }
+
+  .hero-tagline {
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 300;
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    line-height: 1.7;
+    color: var(--cream-dark);
+    max-width: 550px;
+    margin: 0 auto 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.9s;
+  }
+
+  .hero-cta {
+    display: inline-block;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 0.12em;
+    color: var(--black);
+    background: var(--gold);
+    padding: 1rem 3rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 1.1s;
+  }
+
+  .hero-cta:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(212, 149, 42, 0.3);
+  }
+
+  .scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 4;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 1.5s;
+  }
+
+  .scroll-indicator span {
+    display: block;
+    width: 1px;
+    height: 40px;
+    background: var(--gold);
+    margin: 0 auto;
+    animation: scrollPulse 2s ease infinite;
+  }
+
+  /* ═══════════════════════════════════════
+     ROLLING PHOTO CAROUSEL
+  ═══════════════════════════════════════ */
+  .carousel-section {
+    overflow: hidden;
+    padding: 0;
+    background: var(--black);
+    border-top: 2px solid var(--gold);
+    border-bottom: 1px solid rgba(212, 149, 42, 0.2);
+  }
+
+  .carousel-track-wrapper {
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Fade edges */
+  .carousel-track-wrapper::before,
+  .carousel-track-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 80px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .carousel-track-wrapper::before {
+    left: 0;
+    background: linear-gradient(to right, var(--black), transparent);
+  }
+
+  .carousel-track-wrapper::after {
+    right: 0;
+    background: linear-gradient(to left, var(--black), transparent);
+  }
+
+  .carousel-track {
+    display: flex;
+    width: max-content;
+    animation: scrollCarousel 42s linear infinite;
+  }
+
+  .carousel-track:hover {
+    animation-play-state: paused;
+  }
+
+  .carousel-img {
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+    flex-shrink: 0;
+    margin-right: 4px;
+    filter: grayscale(20%);
+    transition: filter 0.3s ease;
+  }
+
+  .carousel-img:hover {
+    filter: grayscale(0%);
+  }
+
+  /* Placeholder for carousel images before real photos are added */
+  .carousel-placeholder {
+    width: 300px;
+    height: 200px;
+    flex-shrink: 0;
+    margin-right: 4px;
+    background: var(--dark-gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 1px solid rgba(255,255,255,0.03);
+  }
+
+  @keyframes scrollCarousel {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* Second carousel - opposite direction */
+  .carousel-track-reverse {
+    display: flex;
+    width: max-content;
+    animation: scrollCarouselReverse 39s linear infinite;
+  }
+
+  .carousel-track-reverse:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes scrollCarouselReverse {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
+  }
+
+  .carousel-gap {
+    height: 4px;
+  }
+
+  /* ═══════════════════════════════════════
+     STATS BAR
+  ═══════════════════════════════════════ */
+  .stats-bar {
+    background: var(--warm-gray);
+    padding: 3rem 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+    flex-wrap: wrap;
+  }
+
+  .stat { text-align: center; }
+
+  .stat-number {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 2.8rem;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 300;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-top: 0.3rem;
+    text-transform: uppercase;
+  }
+
+  /* ═══════════════════════════════════════
+     STORY SECTION
+  ═══════════════════════════════════════ */
+  .story {
+    padding: 6rem 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+  }
+
+  .section-heading {
+    font-family: 'Permanent Marker', cursive;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    color: var(--cream);
+    line-height: 1.1;
+    margin-bottom: 2rem;
+  }
+
+  .story-text {
+    font-weight: 300;
+    font-size: 1.1rem;
+    line-height: 1.85;
+    color: var(--cream-dark);
+  }
+
+  .story-text p { margin-bottom: 1.5rem; }
+
+  .story-text strong {
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  /* ═══════════════════════════════════════
+     THEMED PHOTO SECTIONS
+  ═══════════════════════════════════════ */
+  .themed-photos {
+    padding: 4rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .themed-row {
+    margin-bottom: 4rem;
+  }
+
+  .themed-row:last-child {
+    margin-bottom: 0;
+  }
+
+  .themed-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    padding-left: 0.25rem;
+  }
+
+  .themed-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+  }
+
+  .themed-grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .themed-cell {
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .themed-cell img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .themed-cell:hover img {
+    transform: scale(1.05);
+  }
+
+  /* Placeholder styling */
+  .themed-cell .placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--dark-gray);
+    border: 1px solid rgba(255,255,255,0.03);
+  }
+
+  /* ═══════════════════════════════════════
+     VISION SECTION
+  ═══════════════════════════════════════ */
+  .vision {
+    padding: 6rem 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .vision-callout {
+    border-left: 3px solid var(--gold);
+    padding-left: 2rem;
+    margin: 2.5rem 0;
+  }
+
+  .vision-callout p {
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 300;
+    font-size: 1.3rem;
+    line-height: 1.7;
+    color: var(--cream);
+    font-style: italic;
+  }
+
+  .vision-text {
+    font-weight: 300;
+    font-size: 1.1rem;
+    line-height: 1.85;
+    color: var(--cream-dark);
+  }
+
+  .vision-text p { margin-bottom: 1.5rem; }
+
+  /* ═══════════════════════════════════════
+     TESTIMONIAL WITH PHOTO
+  ═══════════════════════════════════════ */
+  .testimonial-section {
+    background: var(--warm-gray);
+    padding: 5rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .testimonial-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .testimonial-photo-wrap {
+    position: relative;
+  }
+
+  .testimonial-photo-wrap::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    right: 8px;
+    bottom: 8px;
+    border: 2px solid var(--gold);
+    z-index: 0;
+  }
+
+  .testimonial-photo {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(20%);
+  }
+
+  /* Placeholder for photo */
+  .testimonial-photo-placeholder {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: var(--dark-gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 1rem;
+    line-height: 1.6;
+    border: 1px solid rgba(255,255,255,0.03);
+  }
+
+  .testimonial-content {
+    padding: 1rem 0;
+  }
+
+  .testimonial-quote-mark {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 4rem;
+    color: var(--gold);
+    line-height: 0.5;
+    margin-bottom: 1rem;
+    opacity: 0.6;
+  }
+
+  .testimonial-quote {
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 300;
+    font-size: 1.35rem;
+    line-height: 1.7;
+    color: var(--cream);
+    font-style: italic;
+    margin-bottom: 1.5rem;
+  }
+
+  .testimonial-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+  }
+
+  .testimonial-detail {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 0.2rem;
+  }
+
+  /* ═══════════════════════════════════════
+     REGISTER SECTION
+  ═══════════════════════════════════════ */
+  .register {
+    padding: 6rem 2rem;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .register .section-heading { text-align: center; }
+  .register .section-label { text-align: center; }
+
+  .register-intro {
+    text-align: center;
+    font-weight: 300;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--cream-dark);
+    margin-bottom: 3rem;
+  }
+
+  .form-group { margin-bottom: 1.5rem; }
+
+  .form-group label {
+    display: block;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    background: var(--dark-gray);
+    border: 1px solid rgba(212, 149, 42, 0.2);
+    color: var(--cream);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    -webkit-appearance: none;
+    border-radius: 0;
+  }
+
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: var(--text-muted); }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--gold);
+  }
+
+  .form-group select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23D4952A' fill='none' stroke-width='1.5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+  }
+
+  .form-group select option {
+    background: var(--dark-gray);
+    color: var(--cream);
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .meeting-options {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+
+  .meeting-option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: var(--dark-gray);
+    border: 1px solid rgba(212, 149, 42, 0.15);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .meeting-option:hover { border-color: var(--gold); }
+
+  .meeting-option input[type="radio"] {
+    width: auto;
+    accent-color: var(--gold);
+    cursor: pointer;
+  }
+
+  .meeting-option-text { flex: 1; }
+
+  .meeting-option-title {
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--cream);
+  }
+
+  .meeting-option-detail {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 0.15rem;
+  }
+
+  .meeting-option-badge {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    background: rgba(212, 149, 42, 0.1);
+    padding: 0.2rem 0.6rem;
+    white-space: nowrap;
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: 1.1rem 2rem;
+    background: var(--gold);
+    color: var(--black);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 0.15em;
+    border: none;
+    cursor: pointer;
+    margin-top: 2rem;
+    transition: all 0.3s ease;
+  }
+
+  .submit-btn:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(212, 149, 42, 0.3);
+  }
+
+  /* ═══════════════════════════════════════
+     FOOTER
+  ═══════════════════════════════════════ */
+  .footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .footer-logo {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 1.5rem;
+    color: var(--cream);
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-logo span { color: var(--gold); }
+
+  .footer-sub {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 300;
+    letter-spacing: 0.05em;
+  }
+
+  .footer-sub a {
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  /* ═══════════════════════════════════════
+     FORM STATES
+  ═══════════════════════════════════════ */
+  .form-success {
+    display: none;
+    text-align: center;
+    padding: 3rem 0;
+  }
+
+  .form-success.show { display: block; }
+
+  .form-success h3 {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 2rem;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+
+  .form-success p {
+    font-weight: 300;
+    font-size: 1.1rem;
+    color: var(--cream-dark);
+    line-height: 1.7;
+  }
+
+  .form-wrapper.hidden { display: none; }
+
+  .divider {
+    width: 60px;
+    height: 2px;
+    background: var(--gold);
+    margin: 0 auto 2rem;
+  }
+
+  /* ═══════════════════════════════════════
+     ANIMATIONS
+  ═══════════════════════════════════════ */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.3); }
+  }
+
+  /* ═══════════════════════════════════════
+     RESPONSIVE
+  ═══════════════════════════════════════ */
+  @media (max-width: 768px) {
+    .hero::after {
+      background-attachment: scroll;
+    }
+
+    .stats-bar { gap: 2rem; padding: 2rem 1.5rem; }
+    .stat-number { font-size: 2.2rem; }
+
+    .carousel-img,
+    .carousel-placeholder { width: 220px; height: 150px; }
+
+    .themed-grid, .themed-grid-2 { grid-template-columns: 1fr 1fr; }
+
+    .testimonial-inner {
+      grid-template-columns: 1fr;
+      text-align: center;
+      gap: 2rem;
+    }
+
+    .testimonial-photo-wrap {
+      max-width: 250px;
+      margin: 0 auto;
+    }
+
+    .form-row { grid-template-columns: 1fr; gap: 1.5rem; }
+
+    .story, .vision, .register, .themed-photos { padding: 4rem 1.5rem; }
+  }
+
+  @media (max-width: 480px) {
+    .stats-bar { gap: 1.5rem; }
+    .stat-number { font-size: 1.8rem; }
+
+    .carousel-img,
+    .carousel-placeholder { width: 180px; height: 120px; }
+
+    .themed-grid, .themed-grid-2 { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Salt Company &times; Anthem Church</div>
+    <h1 class="hero-title">For Good<br><span>Mizzou</span></h1>
+    <p class="hero-subtitle">For the glory of God. For the good of Mizzou. For the generations to come.</p>
+    <p class="hero-tagline">
+      Something is happening on Mizzou's campus. Students are being reached, lives are being changed, and we have a bold vision for what's next. We want to share it with you.
+    </p>
+    <a href="#register" class="hero-cta">I Want to Hear More</a>
+  </div>
+  <div class="scroll-indicator"><span></span></div>
+</section>
+
+<!-- ═══════════ ROLLING PHOTO CAROUSEL ═══════════ -->
+<section class="carousel-section">
+  <!-- ROW 1: scrolls left (16 photos, duplicated for seamless loop) -->
+  <div class="carousel-track-wrapper">
+    <div class="carousel-track" id="carouselRow1">
+      <img src="ForGoodMedia/Anthem%2010_19-68.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/Anthem%2011_9-034.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/Anthem%2011_9-035.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/Anthem%2011_9-040.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/Anthem%2011_9-052.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/Anthem%2011_9-063.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/DSC05720.ARW.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/DSC05751.ARW.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/DSC05796.ARW.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/DSC05803.ARW.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/DSC05919.ARW.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/DSC05980.ARW.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/DSC06020.ARW.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/IMG_3980.JPG" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/IMG_4000.JPG" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/IMG_4013.JPG" alt="Salt Company" class="carousel-img">
+      <!-- DUPLICATE SET for seamless loop -->
+      <img src="ForGoodMedia/Anthem%2010_19-68.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/Anthem%2011_9-034.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/Anthem%2011_9-035.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/Anthem%2011_9-040.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/Anthem%2011_9-052.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/Anthem%2011_9-063.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/DSC05720.ARW.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/DSC05751.ARW.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/DSC05796.ARW.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/DSC05803.ARW.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/DSC05919.ARW.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/DSC05980.ARW.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/DSC06020.ARW.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/IMG_3980.JPG" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/IMG_4000.JPG" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/IMG_4013.JPG" alt="Salt Company" class="carousel-img">
+    </div>
+  </div>
+
+  <div class="carousel-gap"></div>
+
+  <!-- ROW 2: scrolls right (15 photos, duplicated for seamless loop) -->
+  <div class="carousel-track-wrapper">
+    <div class="carousel-track-reverse" id="carouselRow2">
+      <img src="ForGoodMedia/IMG_4018.JPG" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/KMD_0034A.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/KMD_1232.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/KMD_2491.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/KMD_9903.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/KMD_9918.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/SaltKickoff2025_KD-026.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/SaltKickoff2025_KD-046.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/SaltKickoff2025_KD-081.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/SaltKickoff2025_KD-082.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/SaltKickoff2025_KD-093.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/SaltKickoff2025_KD-108.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/SaltKickoff2025_KD-114.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/SipsxSalt_10092025_KMD-18.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/SipsxSalt_10092025_KMD-50.jpg" alt="Salt Company" class="carousel-img">
+      <!-- DUPLICATE SET for seamless loop -->
+      <img src="ForGoodMedia/IMG_4018.JPG" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/KMD_0034A.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/KMD_1232.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/KMD_2491.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/KMD_9903.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/KMD_9918.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/SaltKickoff2025_KD-026.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/SaltKickoff2025_KD-046.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/SaltKickoff2025_KD-081.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/SaltKickoff2025_KD-082.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/SaltKickoff2025_KD-093.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/SaltKickoff2025_KD-108.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/SaltKickoff2025_KD-114.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/SipsxSalt_10092025_KMD-18.jpg" alt="Salt Company" class="carousel-img">
+      <img src="ForGoodMedia/SipsxSalt_10092025_KMD-50.jpg" alt="Salt Company" class="carousel-img">
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ STATS BAR ═══════════ -->
+<div class="stats-bar">
+  <div class="stat">
+    <div class="stat-number">150+</div>
+    <div class="stat-label">Baptisms</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number">1,200+</div>
+    <div class="stat-label">Connected &amp; Discipled</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number">100+</div>
+    <div class="stat-label">Sent on Mission</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number">1</div>
+    <div class="stat-label">Church Planted</div>
+  </div>
+</div>
+
+<!-- ═══════════ STORY ═══════════ -->
+<section class="story">
+  <p class="section-label">The Story</p>
+  <h2 class="section-heading">Salt Company exists to reach the next generation at Mizzou.</h2>
+  <div class="story-text">
+    <p>
+      Since 2017, Salt Company has been gathering on Mizzou's campus — not as a club or a program, but as a movement. Every week, college students show up hungry to know Jesus, to be known in community, and to be sent out on mission. And God has been faithful.
+    </p>
+    <p>
+      Students who walked in skeptical have been baptized. Students who came in lonely have found a family. Students who had no direction have been sent to the nations. What started as a handful of gatherings has become <strong>one of the most vibrant college ministries in the country</strong> — and it's only the beginning.
+    </p>
+    <p>
+      Salt Company is the college ministry of Anthem Church in Columbia, Missouri — part of the <strong>Salt Network</strong> of churches committed to reaching the next generation. Everything we do is fueled by a local church that believes the gospel is for everyone — including the 30,000+ students walking Mizzou's campus every day.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════ THEMED PHOTO SECTIONS ═══════════ -->
+<section class="themed-photos">
+  <div class="themed-row">
+    <div class="themed-label">Baptism</div>
+    <div class="themed-grid themed-grid-2">
+      <div class="themed-cell"><img src="ForGoodMedia/Baptism1.jpg" alt="Baptism at Salt Company"></div>
+      <div class="themed-cell"><img src="ForGoodMedia/Baptism2.jpg" alt="Baptism at Salt Company"></div>
+    </div>
+  </div>
+
+  <div class="themed-row">
+    <div class="themed-label">Worship</div>
+    <div class="themed-grid themed-grid-2">
+      <div class="themed-cell"><img src="ForGoodMedia/Worship1.jpg" alt="Worship at Salt Company"></div>
+      <div class="themed-cell"><img src="ForGoodMedia/Worship2.jpg" alt="Worship at Salt Company"></div>
+    </div>
+  </div>
+
+  <div class="themed-row">
+    <div class="themed-label">Sent Out</div>
+    <div class="themed-grid themed-grid-2">
+      <div class="themed-cell"><img src="ForGoodMedia/Sending1.jpg" alt="Sent out on mission"></div>
+      <div class="themed-cell"><img src="ForGoodMedia/Sending2.jpg" alt="Sent out on mission"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ VISION ═══════════ -->
+<section class="vision">
+  <p class="section-label">Where We're Going</p>
+  <h2 class="section-heading">We have a bold vision. And we want you to be part of it.</h2>
+  <div class="vision-text">
+    <p>
+      Anthem Church is stepping into the biggest season in our history. We're calling it <strong>For Good</strong> — a two-year initiative to expand our ministry, strengthen our mission, and build a permanent home that positions us to reach Columbia and Mizzou's campus for decades to come.
+    </p>
+  </div>
+
+  <div class="vision-callout">
+    <p>"God is doing something significant in our church — something far bigger than a building, a campaign, or a moment. He is forming us into a people who build, pray, serve, give, and love for good."</p>
+  </div>
+
+  <div class="vision-text">
+    <p>
+      This vision directly fuels Salt Company — expanded spaces for worship and discipleship, deeper investment in campus ministry, greater resources to reach students, and a foundation that ensures this work doesn't just last a semester, but <strong>for generations</strong>.
+    </p>
+    <p>
+      We're hosting a small number of gatherings to share the full vision with the people who love what God is doing through Salt Company. If you're a parent, an alum, or a friend of this ministry — we'd love for you to be in the room.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════ TESTIMONIAL WITH PHOTO ═══════════ -->
+<section class="testimonial-section">
+  <div class="testimonial-inner">
+    <div class="testimonial-photo-wrap">
+      <img src="ForGoodMedia/Testimonial.jpg" alt="Student testimonial" class="testimonial-photo">
+    </div>
+    <div class="testimonial-content">
+      <div class="testimonial-quote-mark">"</div>
+      <p class="testimonial-quote">
+        Salt Company didn't just change my college years — it changed the trajectory of my life. I walked in not knowing anyone, and I walked out knowing Jesus.
+      </p>
+      <!-- Replace with real student info -->
+      <p class="testimonial-name">Student Name</p>
+      <p class="testimonial-detail">Salt Company Alum, Class of 2024 — Baptized Fall 2022</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ REGISTER ═══════════ -->
+<section class="register" id="register">
+  <p class="section-label">Join Us</p>
+  <h2 class="section-heading" style="margin-bottom: 1rem;">Come hear the vision.</h2>
+  <div class="divider"></div>
+  <p class="register-intro">
+    We're hosting a few short gatherings to share what God is doing and where we're headed. Pick the one that works for you — we'd love to have you there.
+  </p>
+
+  <div class="form-wrapper" id="formWrapper">
+    <form id="registerForm" onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input type="text" id="firstName" name="firstName" placeholder="First name" required>
+        </div>
+        <div class="form-group">
+          <label for="lastName">Last Name</label>
+          <input type="text" id="lastName" name="lastName" placeholder="Last name" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="your@email.com" required>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone</label>
+        <input type="tel" id="phone" name="phone" placeholder="(555) 123-4567" required>
+      </div>
+
+      <div class="form-group">
+        <label>Which gathering works for you?</label>
+        <div class="meeting-options">
+          <label class="meeting-option">
+            <input type="radio" name="meeting" value="kc" required>
+            <div class="meeting-option-text">
+              <div class="meeting-option-title">Kansas City Gathering</div>
+              <div class="meeting-option-detail">Date & location TBD — March 2026</div>
+            </div>
+            <div class="meeting-option-badge">In Person</div>
+          </label>
+          <label class="meeting-option">
+            <input type="radio" name="meeting" value="springfield">
+            <div class="meeting-option-text">
+              <div class="meeting-option-title">Springfield Gathering</div>
+              <div class="meeting-option-detail">Date & location TBD — March 2026</div>
+            </div>
+            <div class="meeting-option-badge">In Person</div>
+          </label>
+          <label class="meeting-option">
+            <input type="radio" name="meeting" value="stl">
+            <div class="meeting-option-text">
+              <div class="meeting-option-title">St. Louis Gathering</div>
+              <div class="meeting-option-detail">Date & location TBD — March 2026</div>
+            </div>
+            <div class="meeting-option-badge">In Person</div>
+          </label>
+          <label class="meeting-option">
+            <input type="radio" name="meeting" value="video1">
+            <div class="meeting-option-text">
+              <div class="meeting-option-title">Video Call — Session 1</div>
+              <div class="meeting-option-detail">Date TBD — March 2026</div>
+            </div>
+            <div class="meeting-option-badge">Online</div>
+          </label>
+          <label class="meeting-option">
+            <input type="radio" name="meeting" value="video2">
+            <div class="meeting-option-text">
+              <div class="meeting-option-title">Video Call — Session 2</div>
+              <div class="meeting-option-detail">Date TBD — March 2026</div>
+            </div>
+            <div class="meeting-option-badge">Online</div>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="connection">Your connection to Salt Company</label>
+        <select id="connection" name="connection" required>
+          <option value="" disabled selected>Select one...</option>
+          <option value="parent-current">Parent of a current student</option>
+          <option value="parent-former">Parent of a former student / alum</option>
+          <option value="alumni">Salt Company alumni</option>
+          <option value="friend">Friend of Salt Company</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="studentName">Student / alum name (optional)</label>
+        <input type="text" id="studentName" name="studentName" placeholder="Who connected you to Salt Company?">
+      </div>
+
+      <button type="submit" class="submit-btn">Reserve My Spot</button>
+    </form>
+  </div>
+
+  <div class="form-success" id="formSuccess">
+    <h3>You're In.</h3>
+    <p>We'll be in touch with the details soon. Thank you for being part of what God is doing at Mizzou.</p>
+  </div>
+</section>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer class="footer">
+  <div class="footer-logo">For Good <span>Mizzou</span></div>
+  <p class="footer-sub">
+    Salt Company &times; <a href="https://anthemcolumbia.com" target="_blank">Anthem Church</a> &mdash; Columbia, Missouri
+  </p>
+</footer>
+
+<script>
+function handleSubmit(e) {
+  e.preventDefault();
+  document.getElementById('formWrapper').classList.add('hidden');
+  document.getElementById('formSuccess').classList.add('show');
+  document.getElementById('formSuccess').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+// Active state for meeting options
+document.querySelectorAll('.meeting-option').forEach(option => {
+  option.addEventListener('click', function() {
+    document.querySelectorAll('.meeting-option').forEach(o => o.style.borderColor = 'rgba(212, 149, 42, 0.15)');
+    this.style.borderColor = '#D4952A';
+  });
+});
+</script>
+
+</body>
+</html>
