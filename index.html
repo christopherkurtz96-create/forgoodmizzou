@@ -650,9 +650,39 @@
   .meeting-option:hover { border-color: var(--gold); }
 
   .meeting-option input[type="radio"] {
-    width: auto;
-    accent-color: var(--gold);
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(212, 149, 42, 0.4);
+    border-radius: 50%;
     cursor: pointer;
+    flex-shrink: 0;
+    position: relative;
+    transition: all 0.3s ease;
+    background: transparent;
+  }
+
+  .meeting-option input[type="radio"]:checked {
+    border-color: var(--gold);
+    background: var(--gold);
+  }
+
+  .meeting-option input[type="radio"]:checked::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    background: var(--black);
+    border-radius: 50%;
+  }
+
+  .meeting-option.selected {
+    border-color: var(--gold);
+    background: rgba(212, 149, 42, 0.08);
   }
 
   .meeting-option-text { flex: 1; }
@@ -1148,8 +1178,8 @@ function handleSubmit(e) {
 // Active state for meeting options
 document.querySelectorAll('.meeting-option').forEach(option => {
   option.addEventListener('click', function() {
-    document.querySelectorAll('.meeting-option').forEach(o => o.style.borderColor = 'rgba(212, 149, 42, 0.15)');
-    this.style.borderColor = '#D4952A';
+    document.querySelectorAll('.meeting-option').forEach(o => o.classList.remove('selected'));
+    this.classList.add('selected');
   });
 });
 </script>
