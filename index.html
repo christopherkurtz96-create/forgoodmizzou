@@ -785,6 +785,7 @@
     line-height: 1.7;
   }
 
+  .hidden { display: none; }
   .form-wrapper.hidden { display: none; }
 
   .submit-btn:disabled {
@@ -1070,9 +1071,10 @@
     We're hosting a few short gatherings to share what God is doing and where we're headed. Pick the one that works for you — we'd love to have you there.
   </p>
 
-  <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
   <div class="form-wrapper" id="formWrapper">
-    <form id="registerForm" action="https://script.google.com/macros/s/AKfycbwiA7rOn3toLQTDJwabTiFuseJPhAuz3QbdOv83yYVL-YnDOWjC9_wxOM1r-MK6VUQN/exec" method="POST" target="hidden_iframe" onsubmit="handleSubmit()">
+    <form id="registerForm" name="registration" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="registration" />
+      <p class="hidden"><input name="bot-field" /></p>
       <div class="form-row">
         <div class="form-group">
           <label for="firstName">First Name</label>
@@ -1183,17 +1185,29 @@
 </footer>
 
 <script>
-function handleSubmit() {
+document.getElementById('registerForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  var form = e.target;
   var btn = document.getElementById('submitBtn');
   btn.disabled = true;
   btn.textContent = 'Submitting...';
 
-  setTimeout(function() {
+  fetch('/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams(new FormData(form)).toString()
+  })
+  .then(function() {
     document.getElementById('formWrapper').classList.add('hidden');
     document.getElementById('formSuccess').classList.add('show');
     document.getElementById('formSuccess').scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }, 1000);
-}
+  })
+  .catch(function() {
+    btn.disabled = false;
+    btn.textContent = 'Reserve My Spot';
+    alert('Something went wrong. Please try again.');
+  });
+});
 
 // Active state for meeting options
 document.querySelectorAll('.meeting-option').forEach(option => {
